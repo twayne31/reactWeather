@@ -6,10 +6,11 @@ const PORT = process.env.PORT || 3000;
 
 //middleware
 app.use(function (req, res, next){
-  if (req.headers['x-forwarded-proto']==='http'){
-    next();
-  }else {
+  //gives you the ability to see it locally as well as heroku
+  if (req.headers['x-forwarded-proto']==='https'){
     res.redirect('http://' + req.hostname + req.url);
+  }else {
+    next();
   }
 });
 app.use(express.static('public'));
