@@ -17,10 +17,11 @@ module.exports = {
         if (res.data.cod && res.data.message ){
             throw new Error(res.data.message)
         }else {
+            //object access of the api
         return res.data.main.temp;
         }
-        }, function (res){
-        throw new Error(res.data.message)
+        }, function (err){
+        throw new Error('Unable to fetch weather for that location')
         });
     }
 }
