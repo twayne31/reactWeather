@@ -16,7 +16,9 @@ var Weather = React.createClass({
         //debugger;
         this.setState({
             isLoading: true,
-            errorMessage: undefined
+            errorMessage: undefined,
+            location: undefined,
+            temp: undefined    
         })
         openWeatherMap.getTemp(location).then(function(temp){
             //'this' is not allowed when using this function
@@ -30,8 +32,23 @@ var Weather = React.createClass({
                 isLoading: false,
                 errorMessage: e.message
              })
-            alert(errorMessage + "| City not found")
         })
+    },
+    componentDidMount: function (){
+        var location = this.props.location.query.location;
+
+        if (location && location.length > 0) {
+            this.handleSearch(location)
+            //browser will clear the string
+            window.location.hash = '#/'
+        }
+    },
+    componentWillReceiveProps: function (newProps){
+        var location = newProps.location.query.location;
+        if (location && location.length > 0){
+            this.handleSearch(location);
+            window.location.hash = '#/';
+        }
     },
     render: function () {
         var {isLoading, temp, location, errorMessage} = this.state
